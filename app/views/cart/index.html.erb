@@ -1,0 +1,46 @@
+<h1>Carrinho</h1>
+<% if current_cart.cart_items.size == 0 %>
+nao há produtos
+<br>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th>produto</th>
+      <th>quantidade</th>
+      <th>valor</th>
+      <th>valor total</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <% current_cart.cart_items.includes(:product).each_with_index do |item, idx| %>
+    <tr>
+      <td><%= idx %> - <%= item.product.name %></td>
+      <td><%= item.qtd %></td>
+      <td><%= item.product.value %></td>
+      <td><%= item.product.value*item.qtd %></td>
+      <td><%= link_to "Delete", remove_from_cart_path(product_id: item.product.id, 
+      product_type: item.product.class.to_s), data: { confirm: 'Text' }, :method=>:delete %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<% end %>
+<hr>
+Promocode
+<%= form_for Promo::Promocode.new, url: add_promocode_path do |f| %>
+  <%= f.text_field :code, value: current_cart.promocode.code if current_cart.promocode %>
+  <%= f.text_field :code unless current_cart.promocode %>
+  <%= f.submit 'add to cart' %>
+<% end %>
+<hr>
+Total - <%= current_cart.total_value %>
+<br>
+Descontos - <%= current_cart.discount_value %>
+<br>
+Final - <%= current_cart.final_value %>
+<hr>
+<%= link_to 'produtos', products_path %> - 
+<%= link_to 'finalizar', checkout_path %>

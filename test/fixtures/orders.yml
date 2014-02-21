@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  total_value: 1
+  discount_value: 1
+  final_value: 1
+
+two:
+  total_value: 1
+  discount_value: 1
+  final_value: 1

@@ -1,0 +1,45 @@
+<h1>Carrinho</h1>
+<% if current_cart.cart_items.size == 0 %>
+nao há produtos
+<br>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th>produto</th>
+      <th>quantidade</th>
+      <th>valor</th>
+      <th>valor total</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% current_cart.cart_items.each_with_index do |item, idx| %>
+    <tr>
+      <td><%= idx %> - <%= item.product.name %></td>
+      <td><%= item.qtd %></td>
+      <td><%= item.product.value %></td>
+      <td><%= item.product.value*item.qtd %></td>
+
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+<% end %>
+
+Total - <%= current_cart.total_value %>
+<br>
+Descontos - <%= current_cart.discount_value %>
+<br>
+Final - <%= current_cart.final_value %>
+<hr>
+
+<%= form_for Order.new, url: proceed_checkout_path do |f| %>
+Forma de pagamento:<br>
+<label>
+Dinheiro
+<%= f.radio_button :payment_method, '1', :checked => true %> 
+</label>
+<hr>
+
+  <%= f.submit 'finalizar compra' %>
+<% end %>
