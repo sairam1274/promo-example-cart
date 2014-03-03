@@ -32,14 +32,22 @@ class Order < ActiveRecord::Base
     order
   end
 
+  def confirm_payment
+    self.update_attribute(:status,STATUS[:closed])
+  end
+
+  def cancel_payment
+    self.update_attribute(:status,STATUS[:canceled])
+  end
+
   def copy_items_from cart
     cart.cart_items.each do |item|
       OrderItem.generate_from_cart(self, item)
     end
   end
 
-    def product_list
-      order_items.includes(:product).collect { |item| item.product }
-    end
+  def product_list
+    order_items.includes(:product).collect { |item| item.product }
+  end
 
 end

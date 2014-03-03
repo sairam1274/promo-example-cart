@@ -1,5 +1,6 @@
 PocPromoGem::Application.routes.draw do
 
+
   get "cart" => 'cart#index', as: :cart
   get "cart/checkout", as: :checkout
   post 'cart/checkout' => 'cart#proceed_checkout', as: :proceed_checkout
@@ -8,11 +9,13 @@ PocPromoGem::Application.routes.draw do
   delete 'cart' => 'cart#destroy_product', as: :remove_from_cart
   get "products" => 'products#index', as: :products
   get "product/:id" => 'products#show', as: :product
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
 
-  # You can have the root of your site routed with "root"
-  root 'home#index'
+  get "orders" => "orders#index", as: :orders
+  get "orders/:id" =>  "orders#show", as: :order
+  get "orders/:id/confirm_payment" => 'orders#confirm_payment', as: :confirm_payment
+  get "orders/:id/cancel_payment" => 'orders#cancel_payment', as: :cancel_payment
+  
+  root 'products#index'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

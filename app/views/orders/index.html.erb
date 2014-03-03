@@ -1,0 +1,8 @@
+<h1>My Orders</h1>
+<% @orders.each do |o| %>
+ - #<%= o.id %> - <%= o.final_value %> (<%= show_order_status o.status %>)
+ <%= link_to 'detalhes', order_path(o) %>
+ <%= link_to 'confirmar', confirm_payment_path(o) %>
+ <%= link_to 'cancelar', cancel_payment_path(o) %>
+ <br>
+<% end %>
